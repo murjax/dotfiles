@@ -1,0 +1,54 @@
+alias sc="rails c"
+alias ss="rails s"
+alias gss="rails s -b 0.0.0.0 -p 3000"
+# alias yarn="/usr/local/Cellar/yarn/1.10.1/bin/yarn"
+alias rails-sessions="lsof -wni tcp:3000"
+alias ember-sessions="lsof -wni tcp:4200"
+alias kill-rails="kill -9 $(lsof -wni tcp:3000)"
+alias resetdb="rake db:drop && rake db:create && rake db:migrate && rake db:seed"
+alias branch-sort="git branch --sort=-committerdate"
+alias my-commit-log="git log --author='Ryan Murphy'"
+alias groutes="rake routes | grep $@"
+alias yp="yarn proxy"
+alias ets="ember test -s"
+alias etsf="ember test -s -f"
+alias gap='git add -p'
+alias gnap='git add -N --ignore-removal . && gap && gref'
+alias glp='git log -p'
+alias glg='git log --graph --oneline --decorate --color --all'
+alias gb='git branch'
+alias gc='git commit -v'
+alias gca='git commit -a -v'
+alias gcl='git clean -f -d'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gdh='git diff HEAD'
+alias gl='git pull'
+alias glod='git log --oneline --decorate'
+alias gp='git push'
+alias gpr='git pull --rebase'
+alias gst='git status'
+alias gr='git rebase'
+alias grc='git rebase --continue'
+alias gra='git rebase --abort'
+alias gco='git checkout'
+alias gprm='git pull --rebase origin master'
+alias kill-all-branches='git branch | grep -v "master" | xargs git branch -D'
+alias fix-schema-conflict="git checkout --ours db && rails gs:load && rails db:migrate"
+alias hard-ember-test="yarn exam:split -s"
+# alias refresh_repository='git branch | grep -v "master" |  grep -v "dev" |  xargs git branch -D; git fetch --all;'
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+eval "$(direnv hook bash)"
+export PATH="$(brew --prefix qt@5.5)/bin:$PATH"
+export PATH=~/Library/Android/sdk/tools:$PATH
+export PATH=~/Library/Android/sdk/platform-tools:$PATH
+export ERL_AFLAGS="-kernel shell_history enabled"
+export JAVA_HOME=$(/usr/libexec/java_home)
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+plugins=(… zsh-completions)
+autoload -U compinit && compinit
+# PROMPT="$p \`if [[ $? == 0 ]]; then echo 🚀  ; else echo 🙈  ; fi \` "
+source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
