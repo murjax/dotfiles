@@ -12,6 +12,9 @@ export ZLS_COLORS=$LSCOLORS
 export LC_CTYPE=en_US.UTF-8
 export LESS=FRX
 
+# iex shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
+
 # make with the nice completion
 autoload -U compinit; compinit
 
@@ -129,3 +132,4 @@ command -v brew > /dev/null && [[ -s $(brew --prefix)/etc/profile.d/autojump.sh 
   # Set Spaceship ZSH as a prompt
   autoload -U promptinit; promptinit
   prompt spaceship
+export PATH="/usr/local/opt/node@14/bin:$PATH"

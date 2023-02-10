@@ -21,45 +21,23 @@ let g:python_host_prog = '/usr/local/bin/python'
 "   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 " endif
 
-" DO NOT USE PLUGINS. These are not maintained
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-easytags' " Automatically generate tags files
-" Plug 'chun-yang/auto-pairs'
-" Plug 'Townk/vim-autoclose' " Automatically close bracket pairs
-" Plug 'nathanaelkane/vim-indent-guides'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'elixir-editors/vim-elixir'
 
 " Use shortcuts gJ and gS to join and split, respectively
 Plug 'AndrewRadev/splitjoin.vim' " Convert between do/end and {}
 
+" Show git diffs while editing a file
 Plug 'airblade/vim-gitgutter'
 
+" Automatically close markup tags
 Plug 'alvan/vim-closetag'
-let g:closetag_filenames = '*.html,*.xhtml,*.html.erb,*.eex'
-
-Plug 'arnar/vim-matchopen' " Highlight the last opened tag
-
-Plug 'bfontaine/brewfile.vim' " Brewfile syntax highlighting
+let g:closetag_filenames = '*.html,*.xhtml,*.html.erb,*.eex,*.jsx,*.vue'
 
 Plug 'blueyed/vim-diminactive' " Diable syntax highlight for inactive windows
 let g:diminactive_use_syntax = 1
 
 Plug 'bronson/vim-trailing-whitespace'
-
-Plug 'editorconfig/editorconfig-Vim'
-Plug 'elixir-editors/vim-elixir'
 Plug 'elzr/vim-json'
-Plug 'rizzatti/dash.vim'
-Plug 'mustache/vim-mustache-handlebars'
-nnoremap <leader>d :Dash<cr>
-
-" Plug 'ervandew/supertab' " Supertab, an omnicomplete popup menu
-" http://vim.wikia.com/wiki/Omni_completion_popup_menu
-" let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-" let g:SuperTabDefaultCompletionType = "context"
-" let g:SuperTabContextDefaultCompletionType = "<C-N>"
-
-Plug 'francoiscabrol/ranger.vim'
 
 Plug 'godlygeek/tabular' " Align text
 nmap <Leader>t= :Tabularize /=<cr>
@@ -73,22 +51,10 @@ vmap <Leader>t> :Tabularize /=>\zs<cr>
 nmap <Leader>t, :Tabularize /,\zs<cr>
 vmap <Leader>t, :Tabularize /,\zs<cr>
 
-Plug 'guns/xterm-color-table.vim' " View xterm colors with :XtermColorTable
-
 Plug 'itchyny/lightline.vim'
-Plug 'juanibiapina/vim-lighttree'
 Plug 'junegunn/fzf.vim'
 
-" Browse git history with :GV
-Plug 'junegunn/gv.vim'
-
-Plug 'junegunn/vim-easy-align'
-
-" Plug 'ludovicchabant/vim-gutentags' " Tag management
-" let g:gutentags_ctags_exclude=['.git', 'node_modules/**/*', 'tmp', 'frontend/**/*']
-" let g:gutentags_gtags_options_file="~/.ctags"
-" let g:gutentags_trace = 1
-
+" Language tag syntax highlighter
 Plug 'majutsushi/tagbar' " https://github.com/majutsushi/tagbar
 let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 1
@@ -129,24 +95,16 @@ let g:tagbar_type_ruby = {
     \ 'scope2kind': { 'class' : 'c' },
         \ }
 
-Plug 'matze/vim-move' " Use modifier+j or modifier+k to move a line or selected lines
 " On ergodox, this allows the left ctrl key to work as the move key
 let g:move_key_modifier = 'C'
-
-" Use paste values as a stack. option+P & shift+option+P will cycle thru
-Plug 'maxbrunsfeld/vim-yankstack'
-
-Plug 'mechatroner/rainbow_csv', { 'for': 'csv' }
 
 Plug 'mhinz/vim-startify' " Always update session on vim close
 let g:startify_session_persistence = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks', 'commands']
 
-Plug 'mustache/vim-mustache-handlebars'
-" Plug 'mxw/vim-jsx'
 Plug 'ngmy/vim-rubocop'
 Plug 'pangloss/vim-javascript'
-" Plug 'jason0x43/vim-js-indent'
+Plug 'jason0x43/vim-js-indent'
 
 " Plug 'Raimondi/delimitMate' " Add automatic delimiters ([<{, quotes, etc
 
@@ -158,17 +116,7 @@ nmap j <Plug>(accelerated_jk_gj)
 " See git diff in commit window as another pane
 Plug 'rhysd/committia.vim'
 
-Plug 'rizzatti/dash.vim'
-nnoremap <leader>d :Dash<cr>
-
 Plug 'sheerun/vim-polyglot'
-
-" Visualize your vim undo tree
-Plug 'sjl/gundo.vim'
-nnoremap <leader>u :GundoToggle<cr>
-let g:gundo_prefer_python3 = 1
-
-Plug 'slashmili/alchemist.vim'
 
 " Press `v` multiple times to expand the selected region in visual mode
 Plug 'terryma/vim-expand-region'
@@ -176,22 +124,16 @@ vmap v <Plug>(expand_region_expand)
 vmap <leader>v <Plug>(expand_region_shrink)
 
 Plug 'thoughtbot/vim-rspec'
-Plug 'jgdavey/tslime.vim'
+Plug 'jgdavey/tslime.vim' " Allows commands to be sent from vim buffer to tmux session
 let g:rspec_runner = "os_x_iterm2"
-let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
+let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
 " let g:rspec_command = "Dispatch rspec {spec}"
 
-Plug 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim' " Universal comment tool
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'tpope/vim-bundler'
-
-Plug 'tpope/vim-rbenv'
-
-Plug 'tpope/vim-characterize' " Add Unicode character metadata when using ga
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-endwise' " Completes ruby blocks
+Plug 'tpope/vim-eunuch' " File operation helper
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
@@ -199,23 +141,17 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-ruby/vim-ruby'
 Plug 'w0rp/ale'
-Plug 'sukima/vim-javascript-imports'
-Plug 'tonchis/vim-to-github'
 
 Plug 'Yggdroot/indentLine' " Display thin vertical lines at code indentation levels
 
 " Themes
-Plug 'ayu-theme/ayu-vim'
-Plug 'baskerville/bubblegum'
-Plug 'nanotech/jellybeans.vim'
-Plug 'squarefrog/tomorrow-night.vim'
 Plug 'w0ng/vim-hybrid'
-let g:deoplete#enable_at_startup = 1
-" Use <tab> key to step into the selections
+
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'sago35/tinygo.vim'
+
 inoremap <expr><tab>  pumvisible() ? "\<c-n>" : "\<tab>"
 
-" This plugin needs to be loaded last
-Plug 'ryanoasis/vim-devicons' " Add icons to plugins
 call plug#end()
 
 set autoindent                                     " Automatic indenting/formatting
