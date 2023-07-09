@@ -15,22 +15,6 @@ export LESS=FRX
 # iex shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
 
-# make with the nice completion
-autoload -U compinit; compinit
-
-# Completion for kill-like commands
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
-zstyle ':completion:*:ssh:*' tag-order hosts users
-zstyle ':completion:*:ssh:*' group-order hosts-domain hosts-host users hosts-ipaddr
-
-# ignore completion functions (until the _ignored completer)
-zstyle ':completion:*:functions' ignored-patterns '_*'
-
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zshcache
-
 # make with the pretty colors
 autoload colors; colors
 
@@ -39,35 +23,6 @@ bindkey -e
 
 # options
 setopt appendhistory extendedglob histignoredups nonomatch prompt_subst interactivecomments
-
-# Bindings
-# external editor support
-autoload edit-command-line
-zle -N edit-command-line
-bindkey '^x^e' edit-command-line
-
-# Partial word history completion
-bindkey '\ep' up-line-or-search
-bindkey '\en' down-line-or-search
-bindkey '\ew' kill-region
-
-if [ -z "$TMUX" ]; then
-  fg-widget() {
-    stty icanon echo pendin -inlcr < /dev/tty
-    stty discard '^O' dsusp '^Y' lnext '^V' quit '^\' susp '^Z' < /dev/tty
-    zle reset-prompt
-    if jobs %- >/dev/null 2>&1; then
-      fg %-
-    else
-      fg
-    fi
-  }
-
-  zle -N fg-widget
-  bindkey -M emacs "^Z" fg-widget
-  bindkey -M vicmd "^Z" fg-widget
-  bindkey -M viins "^Z" fg-widget
-fi
 
 # prompt
 p=
@@ -89,10 +44,59 @@ setopt INC_APPEND_HISTORY
 
 # default apps
 (( ${+PAGER}   )) || export PAGER='less'
-(( ${+EDITOR}  )) || export EDITOR='vim'
-export PSQL_EDITOR='vim -c"setf sql"'
+(( ${+EDITOR}  )) || export EDITOR='nvim'
+export PSQL_EDITOR='nvim -c"setf sql"'
 
-# aliases
+l.() {
+  ls -ld "${1:-$PWD}"/.[^.]*
+}
+
+# Rails
+alias rc="rails c"
+alias rs="rails s"
+alias rails-sessions="lsof -wni tcp:3000"
+alias kill-rails="kill -9 $(lsof -wni tcp:3000)"
+alias resetdb="rake db:drop && rake db:create && rake db:migrate && rake db:seed"
+alias groutes="rake routes | grep $@"
+
+# Git
+alias gap='git add -p'
+alias gnap='git add -N --ignore-removal . && gap && gref'
+alias glp='git log -p'
+alias glg='git log --graph --oneline --decorate --color --all'
+alias gb='git branch'
+alias gc='git commit -v'
+alias gca='git commit -a -v'
+alias gcl='git clean -f -d'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gdh='git diff HEAD'
+alias gl='git pull'
+alias glod='git log --oneline --decorate'
+alias gp='git push'
+alias gpr='git pull --rebase'
+alias gst='git status'
+alias gr='git rebase'
+alias grc='git rebase --continue'
+alias gra='git rebase --abort'
+alias gco='git checkout'
+alias branch-sort="git branch --sort=-committerdate"
+alias my-commit-log="git log --author='Ryan Murphy'"
+
+# Paths
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$(python3 -m site --user-base)/bin:$PATH"
+export PATH=~/flutter/bin:$PATH
+export ERL_AFLAGS="-kernel shell_history enabled"
+export PATH=~/usr/local/android-studio/bin:$PATH
+export JAVA_HOME=/usr/lib/jvm/jdk-19
+export PATH=$JAVA_HOME/bin:$PATH
+export PATH=/usr/local/go/bin:$PATH
+export PATH=~/elixir/bin:$PATH
+eval "$(rbenv init -)"
+
+# System
 alias l="ls -F -G -lah"
 alias ll="ls -l"
 alias la="ls -a"
@@ -101,35 +105,17 @@ alias md='mkdir -p'
 alias rd='rmdir'
 alias cd..='cd ..'
 alias ..='cd ..'
-alias groutes='rake routes | grep $@'
+alias cpfile="xclip -sel c < $@" # Linux only
 
-l.() {
-  ls -ld "${1:-$PWD}"/.[^.]*
-}
+plugins=(… zsh-completions)
 
-# rvm-install added line:
-if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then source "$HOME/.rvm/scripts/rvm" ; fi
-
-cuke() {
-  local file="$1"
-  shift
-  cucumber "features/$(basename $file)" $@
-}
-compctl -g '*.feature' -W features cuke
-
-# import local zsh customizations, if present
-zrcl="$HOME/.zshrc.local"
-[[ ! -a $zrcl ]] || source $zrcl
+autoload -U compinit && compinit
+source "$HOME/.zsh/spaceship/spaceship.zsh"
+source /home/murjax-dev/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # set cd autocompletion to commonly visited directories
 cdpath=(~ ~/src $DEV_DIR $SOURCE_DIR)
 
 # remove duplicates in $PATH
 typeset -aU path
-
-command -v brew > /dev/null && [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
-  # Set Spaceship ZSH as a prompt
-  autoload -U promptinit; promptinit
-  prompt spaceship
-export PATH="/usr/local/opt/node@14/bin:$PATH"

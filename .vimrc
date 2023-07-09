@@ -52,7 +52,8 @@ nmap <Leader>t, :Tabularize /,\zs<cr>
 vmap <Leader>t, :Tabularize /,\zs<cr>
 
 Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'mileszs/ack.vim'
 
 " Language tag syntax highlighter
 Plug 'majutsushi/tagbar' " https://github.com/majutsushi/tagbar
@@ -149,6 +150,7 @@ Plug 'w0ng/vim-hybrid'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'sago35/tinygo.vim'
+Plug 'dart-lang/dart-vim-plugin'
 
 inoremap <expr><tab>  pumvisible() ? "\<c-n>" : "\<tab>"
 
@@ -369,6 +371,10 @@ command! -bang -nargs=* Find
 " bind F to ripgrep word under cursor
 nnoremap K :Find <cr>
 nnoremap <leader>p :Files<cr>
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " Pretty format json!
 " https://til.hashrocket.com/posts/ha0ci0pvkj-format-json-in-vim-with-jq
