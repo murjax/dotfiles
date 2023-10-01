@@ -140,8 +140,10 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-ruby/vim-ruby'
 Plug 'w0rp/ale'
+Plug 'jgdavey/vim-blockle'
 
 Plug 'Yggdroot/indentLine' " Display thin vertical lines at code indentation levels
 
