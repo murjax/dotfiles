@@ -57,6 +57,19 @@ require('mason-lspconfig').setup({
   },
 })
 
+-- tailwindcss-colorizer-cmp
+local cmp = require("cmp")
+local tailwindcss_colors = require("tailwindcss-colorizer-cmp")
+local cmp_formatter = function(entry, vim_item)
+    return tailwindcss_colors.formatter(entry, vim_item)
+end
+
+cmp.setup({
+    formatting = {
+        format = cmp_formatter,
+    },
+})
+
 EOF
 
 set runtimepath+=~/.vim,~/.vim/after
