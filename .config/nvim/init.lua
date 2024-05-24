@@ -23,6 +23,7 @@ require("lazy").setup({
   "sheerun/vim-polyglot",
   "rhysd/committia.vim",
   "thoughtbot/vim-rspec",
+  "moofish32/vim-ex_test",
   "tomtom/tcomment_vim",
   "tpope/vim-endwise",
   "tpope/vim-eunuch",
@@ -95,43 +96,48 @@ vim.api.nvim_set_keymap(
   ">>_",
   { noremap = true }
 )
+
 vim.api.nvim_set_keymap(
   "n",
   "<S-Tab>",
   "<<_",
   { noremap = true }
 )
+
 vim.api.nvim_set_keymap(
   "i",
   "<S-Tab>",
   "<C-D>",
   { noremap = true }
 )
+
 vim.api.nvim_set_keymap(
   "v",
   "<Tab>",
   ">gv",
   { noremap = true }
 )
+
 vim.api.nvim_set_keymap(
   "v",
   "<S-Tab>",
   "<gv",
   { noremap = true }
 )
+
 vim.api.nvim_set_keymap(
   "v",
   ">",
   ">gv",
   { noremap = true }
 )
+
 vim.api.nvim_set_keymap(
   "v",
   "<",
   "<gv",
   { noremap = true }
 )
-
 
 -- Replace old school ruby hashes with modern day syntax
 vim.api.nvim_set_keymap(
@@ -195,12 +201,45 @@ vim.api.nvim_set_keymap(
   {}
 )
 
+-- vim-ex-test settings
+vim.g['ex_test_command'] = 'call Send_to_Tmux("mix test {test}\n")'
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>et",
+  ":call RunCurrentTestFile()<CR>",
+  {}
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>es",
+  ":call RunNearestTest()<CR>",
+  {}
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>el",
+  ":call RunLastTest()<CR>",
+  {}
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>ea",
+  ":call RunAllTests()<CR>",
+  {}
+)
+
+-- Run last command in target tmux pane.
 vim.api.nvim_set_keymap(
   "n",
   "<leader>u",
   ":call Send_to_Tmux(\"!!\\n\")<CR>",
   {}
 )
+
+-- fzf commands
 
 -- May improve fzf quit speed when esc is pressed.
 -- This seems to be mostly fine in modern nvim, but this still helps slightly.
@@ -212,11 +251,11 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   command = 'tnoremap <buffer> <esc> <c-c>'
 })
 
+local rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "!{.git,log,coverage,node_modules,vendor,frontend,tmp}/*" -g "!tmux*" -g "!*.log" -g "!tags"'
 -- Hide preview when using ripgrep. Shows more of the matching text.
 vim.api.nvim_create_user_command(
   "Rg",
   function(opts)
-    local rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "!{.git,log,coverage,node_modules,vendor,frontend,tmp}/*" -g "!tmux*" -g "!*.log" -g "!tags"'
     vim.call("fzf#vim#grep", rg_command .. " " .. "\"" .. opts.args .. "\"", vim.call("fzf#vim#with_preview", "right:50%:hidden"), false)
   end,
   { nargs = "?" }
@@ -227,7 +266,6 @@ vim.api.nvim_create_user_command(
   "Find",
   function(opts)
     local term = vim.call("expand", "<cword>")
-    local rg_command = 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "!{.git,log,coverage,node_modules,vendor,frontend,tmp}/*" -g "!tmux*" -g "!*.log" -g "!tags"'
     vim.call("fzf#vim#grep", rg_command .. " " .. term, vim.call("fzf#vim#with_preview", "right:50%:hidden"), false)
   end,
   { nargs = 0 }
