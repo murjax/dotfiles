@@ -28,6 +28,7 @@ require("lazy").setup({
   "tpope/vim-endwise",
   "tpope/vim-eunuch",
   "tpope/vim-fugitive",
+  "tpope/vim-rhubarb",
   "Yggdroot/indentLine",
   "jgdavey/tslime.vim",
   "folke/tokyonight.nvim",
