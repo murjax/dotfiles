@@ -25,11 +25,15 @@ require("lazy").setup({
   "thoughtbot/vim-rspec",
   "moofish32/vim-ex_test",
   "tomtom/tcomment_vim",
+  "MattesGroeger/vim-bookmarks",
   "tpope/vim-endwise",
   "tpope/vim-eunuch",
   "tpope/vim-fugitive",
   "tpope/vim-rhubarb",
   "Yggdroot/indentLine",
+  "axelf4/vim-strip-trailing-whitespace",
+  "Raimondi/delimitMate",
+  "machakann/vim-sandwich",
   "jgdavey/tslime.vim",
   "folke/tokyonight.nvim",
   { "VonHeikemen/lsp-zero.nvim", branch = "v3.x", },
@@ -40,6 +44,16 @@ require("lazy").setup({
   "hrsh7th/cmp-nvim-lsp",
   "L3MON4D3/LuaSnip",
   "roobert/tailwindcss-colorizer-cmp.nvim",
+  {
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {}
+  }
 })
 
 -- " LSP with lsp-zero
@@ -86,6 +100,7 @@ vim.opt.numberwidth = 5
 vim.opt.showtabline = 2
 vim.opt.smartcase = true
 vim.opt.tabstop = 2
+vim.opt.showmode = false
 
 -- Theme
 vim.cmd[[colorscheme tokyonight]]
