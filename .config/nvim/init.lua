@@ -16,9 +16,11 @@ require("lazy").setup({
   "airblade/vim-gitgutter",
   "bronson/vim-trailing-whitespace",
   "itchyny/lightline.vim",
-  { "junegunn/fzf", dir = "~/.fzf", build = "./install --all" },
-  "junegunn/fzf.vim",
-  "mhinz/vim-startify",
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {}
+  },
   "rhysd/accelerated-jk",
   "sheerun/vim-polyglot",
   "rhysd/committia.vim",
@@ -29,13 +31,24 @@ require("lazy").setup({
   "tpope/vim-eunuch",
   "tpope/vim-fugitive",
   "tpope/vim-rhubarb",
+  "tpope/vim-rails",
   "tpope/vim-projectionist",
   "Yggdroot/indentLine",
   "axelf4/vim-strip-trailing-whitespace",
-  "Raimondi/delimitMate",
   "machakann/vim-sandwich",
   "jgdavey/tslime.vim",
-  "folke/tokyonight.nvim",
+  -- "folke/tokyonight.nvim",
+  {
+    'sainnhe/everforest',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.opt.background = "dark"
+      vim.g.everforest_background = "hard"
+      vim.g.everforest_enable_italic = true
+      vim.cmd.colorscheme('everforest')
+    end
+  },
   { "VonHeikemen/lsp-zero.nvim", branch = "v3.x", },
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
@@ -53,7 +66,13 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons",
     },
     opts = {}
-  }
+  },
+  {
+    'https://codeberg.org/esensar/nvim-dev-container',
+    dependencies = 'nvim-treesitter/nvim-treesitter'
+  },
+  "stevearc/oil.nvim",
+  "jgdavey/vim-blockle"
 })
 
 -- Basic settings
@@ -72,9 +91,6 @@ vim.opt.showtabline = 2
 vim.opt.smartcase = true
 vim.opt.tabstop = 2
 vim.opt.showmode = false
-
--- Theme
-vim.cmd[[colorscheme tokyonight]]
 
 require 'vim-test'
 require 'fzf'

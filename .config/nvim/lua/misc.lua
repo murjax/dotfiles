@@ -79,3 +79,6 @@ vim.api.nvim_set_keymap(
   ":call Send_to_Tmux(\"!!\\n\")<CR>",
   {}
 )
+
+require("oil").setup()
+require("devcontainer").setup{}
