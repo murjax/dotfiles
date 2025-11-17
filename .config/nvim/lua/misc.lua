@@ -80,5 +80,35 @@ vim.api.nvim_set_keymap(
   {}
 )
 
-require("oil").setup()
-require("devcontainer").setup{}
+-- Shorthand for tabnew
+vim.api.nvim_set_keymap(
+  "n",
+  ":tn",
+  ":tabnew",
+  { noremap = true }
+)
+
+-- Shorthand for tabedit
+vim.api.nvim_set_keymap(
+  "n",
+  ":te",
+  ":tabedit",
+  { noremap = true }
+)
+
+-- Use Esc to exit terminal mode
+vim.api.nvim_set_keymap(
+  "t",
+  "<Esc>",
+  "<C-\\><C-n>",
+  { noremap = true }
+)
+
+-- Create file in new folder
+vim.api.nvim_set_keymap("n", "<C-n>", "<cmd>AdvancedNewFile<CR>", { noremap = true })
+
+-- Auto-reload files on exterior changes
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  command = "if mode() != 'c' | checktime | endif",
+})
